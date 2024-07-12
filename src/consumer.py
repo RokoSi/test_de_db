@@ -1,6 +1,10 @@
 import json
+import logging
+
 from confluent_kafka import Consumer
 from settings import settings
+
+log = logging.getLogger(__name__)
 
 
 def mgs_kafka_json():
@@ -22,12 +26,11 @@ def mgs_kafka_json():
                 continue
 
             if msg.error():
-                print(f"Consumer error: {msg.error()}")
+                log.error(f"Consumer error: {msg.error()}")
                 continue
 
             data = json.loads(msg.value().decode('utf-8'))
             yield data
     finally:
-
         consumer.close()
 
