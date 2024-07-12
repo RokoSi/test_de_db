@@ -1,5 +1,6 @@
 import logging
 import os
+from pprint import pprint
 
 from consumer import mgs_kafka_json
 from db_use import save_user
@@ -24,6 +25,7 @@ logging.basicConfig(
 def main():
     for data in mgs_kafka_json():
         if data:
+            data = list([data])
             user = pars_user(data)
             if save_user(settings, user[0]):
                 print("пользователь добавлен в бд")
