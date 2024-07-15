@@ -1,12 +1,13 @@
 import logging
 from typing import Union, List, Dict
+
 from data_provider import connect_db
 
 log = logging.getLogger(__name__)
 
 
 def get_users_db(
-    setting, password_validation: bool
+        setting, password_validation: bool
 ) -> Union[List[Dict], bool]:
     """
     Получение user с помощью email

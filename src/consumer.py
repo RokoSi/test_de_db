@@ -2,6 +2,7 @@ import json
 import logging
 
 from confluent_kafka import Consumer
+
 from settings import settings
 
 log = logging.getLogger(__name__)
@@ -33,4 +34,3 @@ def mgs_kafka_json():
             yield data
     finally:
         consumer.close()
-

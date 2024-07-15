@@ -1,4 +1,5 @@
 from typing import Tuple, Union, List
+
 from data_provider import connect_db
 
 

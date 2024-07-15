@@ -1,5 +1,6 @@
 import logging
 import os
+
 from consumer import mgs_kafka_json
 from db_use import save_user
 from json_parsing import pars_user

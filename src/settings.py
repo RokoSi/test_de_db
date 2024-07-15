@@ -16,4 +16,5 @@ class Settings(BaseSettings):
     password_kafka: str
     topic: str
 
+
 settings = Settings()

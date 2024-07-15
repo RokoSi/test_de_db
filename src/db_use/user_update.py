@@ -2,14 +2,14 @@ import logging
 from typing import Any, List, Union
 
 import psycopg2
-from data_provider import connect_db
 
+from data_provider import connect_db
 
 log = logging.getLogger(__name__)
 
 
 def update_param_table_registration_data_db(
-    setting, email: str, name_param: str, value: Any
+        setting, email: str, name_param: str, value: Any
 ) -> Union[List[dict], bool]:
     """
     Метод для обновления данных в таблице registration_data
@@ -26,7 +26,7 @@ def update_param_table_registration_data_db(
 
 
 def update_param_table_media_data_db(
-    setting, email: str, name_param: str, value: Any
+        setting, email: str, name_param: str, value: Any
 ) -> Union[List[dict], bool]:
     """
     Метод для обновления данных в таблице media_data
@@ -47,7 +47,7 @@ def update_param_table_media_data_db(
 
 
 def update_param_table_contact_details_db(
-    setting, email: str, name_param: str, value: Any
+        setting, email: str, name_param: str, value: Any
 ) -> Union[List[dict], bool]:
     """
     Метод для обновления данных в таблице contact_details
@@ -68,7 +68,7 @@ def update_param_table_contact_details_db(
 
 
 def update_param_table_users_db(
-    setting, email: str, name_param: str, value: Any
+        setting, email: str, name_param: str, value: Any
 ) -> Union[List[dict], bool]:
     """
     Метод для обновления данных в таблице users
@@ -146,7 +146,7 @@ def del_user(setting, email: str) -> bool:
 
 
 def update_param_table_locations_db(
-    setting, email: str, name_param: str, value: Union[str, float, int]
+        setting, email: str, name_param: str, value: Union[str, float, int]
 ) -> Union[List[dict], bool]:
     """
     Метод для обновления данных в таблице locations
@@ -166,7 +166,7 @@ def update_param_table_locations_db(
 
 
 def update_param_table_cities_db(
-    setting, email: str, name_param: str, value: Any
+        setting, email: str, name_param: str, value: Any
 ) -> Union[List[dict], bool]:
     """
     Метод для обновления данных в таблице cities

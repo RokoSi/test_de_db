@@ -1,8 +1,10 @@
 import hashlib
+import random
 import secrets
 import string
-import random
+
 import pytest
+
 from src.db_use.get_user import get_users_db
 from src.db_use.user_update import (
     update_param_table_registration_data_db,
@@ -186,7 +188,6 @@ class TestDataProviderDB:
     @pytest.mark.parametrize('execution_number', range(1))
     def test_update_param_table_locations_db(self, execution_number,
                                              user_data_test, setting_te):
-
         email = user_data_test[0]
         print(email)
         param = self.random_param_locations()

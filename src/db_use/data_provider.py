@@ -1,16 +1,17 @@
 import logging
 from typing import Callable, Union, Tuple, Any, List, Optional
+
 import psycopg2
 from psycopg2 import OperationalError, ProgrammingError, DatabaseError
-from ddl import ddl_use_string
 
+from ddl import ddl_use_string
 
 log = logging.getLogger(__name__)
 
 
 def decorator_get_users_db(func: Callable) -> Callable:
     def wrapper(
-        settings, query: str, param: Optional[Tuple[Any, ...]] = None
+            settings, query: str, param: Optional[Tuple[Any, ...]] = None
     ) -> Union[List[dict], int, bool]:
         """
         Обработка ошибок.
@@ -44,7 +45,7 @@ def decorator_get_users_db(func: Callable) -> Callable:
 
 @decorator_get_users_db
 def connect_db(
-    setting, query: str, param: Optional[Tuple[Any, ...]] = None
+        setting, query: str, param: Optional[Tuple[Any, ...]] = None
 ) -> list[tuple[Any, ...]] | int | bool:
     """
     Подключение к бд
@@ -55,10 +56,10 @@ def connect_db(
     """
     try:
         with psycopg2.connect(
-            host=setting.host,
-            user=setting.user,
-            password=setting.password,
-            database=setting.db,
+                host=setting.host,
+                user=setting.user,
+                password=setting.password,
+                database=setting.db,
         ) as connection:
             connection.autocommit = True
         with connection.cursor() as cursor:
