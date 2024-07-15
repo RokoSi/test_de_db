@@ -1,6 +1,6 @@
 import logging
 from typing import Union, List
-from .model.users import Users
+from model.users import Users
 
 log = logging.getLogger(__name__)
 

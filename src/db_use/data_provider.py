@@ -2,7 +2,7 @@ import logging
 from typing import Callable, Union, Tuple, Any, List, Optional
 import psycopg2
 from psycopg2 import OperationalError, ProgrammingError, DatabaseError
-from .ddl import ddl_use_string
+from ddl import ddl_use_string
 
 
 log = logging.getLogger(__name__)

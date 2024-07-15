@@ -1,6 +1,6 @@
 import logging
 from typing import Union, List, Dict
-from .data_provider import connect_db
+from data_provider import connect_db
 
 log = logging.getLogger(__name__)
 
