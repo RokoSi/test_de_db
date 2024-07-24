@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     port: int
     user_kafka: str
     password_kafka: str
-    topic: str
+    topic: str = "test_msg"
 
 
-settings = Settings()
+settings = Settings()  #ignore

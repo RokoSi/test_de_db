@@ -2,8 +2,8 @@ from typing import Union
 
 from pydantic import BaseModel
 
-from coordinates import Coordinates
-from street import Street
+from .coordinates import Coordinates
+from .street import Street
 
 
 class Location(BaseModel):

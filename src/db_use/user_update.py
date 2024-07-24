@@ -3,7 +3,7 @@ from typing import Any, List, Union
 
 import psycopg2
 
-from data_provider import connect_db
+from .data_provider import connect_db
 
 log = logging.getLogger(__name__)
 

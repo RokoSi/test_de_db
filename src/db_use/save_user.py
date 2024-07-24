@@ -1,6 +1,6 @@
 from typing import Tuple, Union, List
 
-from data_provider import connect_db
+from .data_provider import connect_db
 
 
 def save_user(setting, person) -> bool:
@@ -24,6 +24,7 @@ def save_user(setting, person) -> bool:
     city: Union[List[Tuple[int]], int] = connect_db(
         setting, insert_query_cities, param_cities
     )
+    print("city = ", city)
     if city and isinstance(city, list):
         city_id: int = city[0][0]
         insert_query_users: str = (
@@ -43,6 +44,7 @@ def save_user(setting, person) -> bool:
         user: Union[List[Tuple[int]], bool] = connect_db(
             setting, insert_query_users, param_users
         )
+        print("User = ", user)
         if isinstance(user, list):
             user_id: int = user[0][0]
 

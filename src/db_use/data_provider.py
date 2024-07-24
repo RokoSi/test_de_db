@@ -1,10 +1,10 @@
-import logging
+﻿import logging
 from typing import Callable, Union, Tuple, Any, List, Optional
 
 import psycopg2
 from psycopg2 import OperationalError, ProgrammingError, DatabaseError
 
-from ddl import ddl_use_string
+from .ddl import ddl_use_string
 
 log = logging.getLogger(__name__)
 
@@ -88,14 +88,16 @@ def create_db(setting) -> bool:
     )
 
     count_table: Union[List[Tuple[int]], bool] = connect_db(setting, query)
+    print("count_table = ",count_table)
     if isinstance(count_table, list):
-        if count_table[0][0] == 0:
+        if count_table[0][0] < 0:
             try:
                 connect_db(setting, ddl_use_string())
                 return True
             except FileNotFoundError as fe:
                 log.error(f"Ошибка пути: {fe}")
-                return False
+            except Exception as e:
+                log.error(e)
         return False
     else:
         return False

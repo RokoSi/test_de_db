@@ -2,6 +2,8 @@ import logging
 import os
 
 from consumer import mgs_kafka_json
+from db_use.data_provider import create_db
+
 from db_use import save_user
 from json_parsing import pars_user
 from settings import settings
@@ -22,11 +24,19 @@ logging.basicConfig(
 
 
 def main():
+    if not create_db(settings):
+        print("База данных не создана")
+    i = 0
     for data in mgs_kafka_json():
         if data:
             data = list([data])
+
             user = pars_user(data)
+            print("setting = ", settings)
+            print("user = ", user)
             if save_user(settings, user[0]):
+                i = i + 1
+                print(f"Счетчик: {i}")
                 print("пользователь добавлен в бд")
             else:
                 print("пользователь не добавлен в бд")

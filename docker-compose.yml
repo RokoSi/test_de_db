@@ -1,21 +1,53 @@
-version: '3.8'
+version: '4'
 
 services:
   db:
-    image: postgres:13
-    restart: always
+    image: postgres:16
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=de_projects
     ports:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
+    networks:
+      - app-network
 
-  kafka:
-    image: bitnami/kafka:latest
+  project:
+    image: python:3.11.6
+    depends_on:
+      - db
     ports:
-      - "9092:9092"
+      - '5624:5624'
+    volumes:
+      - ../test_de_db:/var/project/test_de_db
+    command: >
+      bash -c "
+      set -x &&
+      cd /var/project/test_de_db &&
+      python -m venv venv &&
+      source venv/bin/activate &&
+      pip install poetry &&
+      poetry install --no-root &&
+      poetry update &&
+      python src/main.py"
+    working_dir: /var/project/test_de_db
+    environment:
+      - HOST=db
+      - DB=de_projects
+      - USER=admin
+      - PASSWORD=password
+      - PORT=5432
+      - USER_KAFKA=aGFybWxlc3MtbGxhbWEtMTA5NTUkSWlsftAT5bb2G5AxTAXsG48EcNi8Pk20sDU
+      - PASSWORD_KAFKA=YzI5N2JhYzQtZGJjMi00YjJmLThjOTQtMTEwNzhiZjQ3MmNm
+       -TOPIC=test_msg
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
 
 volumes:
   db:
