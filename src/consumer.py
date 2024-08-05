@@ -29,7 +29,7 @@ def mgs_kafka_json():
             if msg.error():
                 log.error(f"Consumer error: {msg.error()}")
                 continue
-
+            print("Сообщения получено!")
             data = json.loads(msg.value().decode('utf-8'))
             return data
     finally:

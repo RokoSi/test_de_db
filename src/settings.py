@@ -21,3 +21,16 @@ settings = Settings()  # ignore
 
 if __name__ == "__main__":
     print(settings.__dict__)
+   # # print(settings)
+   #  import os
+   #
+   #  file_name = '.env.dev'
+   #  directories = ['.', '..', '../src']
+   #  for directory in directories:
+   #      file_path = os.path.join(directory, file_name)
+   #      if os.path.isfile(file_path):
+   #          print(f"Файл найден: {file_path}")
+   #          break
+   #  else:
+   #      print(f"Файл {file_name} не найден в указанных директориях.")
+

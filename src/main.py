@@ -1,7 +1,5 @@
 import logging
 import os
-from pprint import pprint
-
 from consumer import mgs_kafka_json
 from json_parsing import pars_user
 from settings import settings
@@ -24,7 +22,7 @@ log = logging.getLogger(__name__)
 
 def main():
     # import os
-    # file_name = '.env.dev'
+    # file_name = '..env.dev'
     # directories = ['.', '..', '../src']
     # for directory in directories:
     #     file_path = os.path.join(directory, file_name)
@@ -33,7 +31,6 @@ def main():
     #         break
     # else:
     #     print(f"Файл {file_name} не найден в указанных директориях.")
-
 
     print("создание базы данных")
     if create_db(settings):
@@ -48,10 +45,10 @@ def main():
             user = pars_user(data)
             if save_user(settings, user[0]):
                 print("пользователь добавлен в бд1")
-                log.info("пользователь добавлен в бд2")
+                exit(0)
             else:
                 print("пользователь не добавлен в бд3")
-                log.info("пользователь не добавлен в бд4")
+            exit(1)
 
 
 if __name__ == "__main__":

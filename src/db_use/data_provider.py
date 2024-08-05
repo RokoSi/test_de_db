@@ -1,4 +1,5 @@
 import logging
+import os
 from typing import Callable, Union, Tuple, Any, List, Optional
 
 import psycopg2
@@ -6,6 +7,17 @@ from psycopg2 import OperationalError, ProgrammingError, DatabaseError
 
 from .ddl import ddl_use_string
 
+log_dir = os.path.join(os.getcwd(), "logs")
+log_file = os.path.join(log_dir, "logfile.log")
+os.makedirs(log_dir, exist_ok=True)
+logging.basicConfig(
+    filename=log_file,
+    filemode="a",
+    encoding="utf-8",
+    level=logging.INFO,
+    format="'%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    datefmt="%d/%m/%Y %I:%M:%S %p",
+)
 log = logging.getLogger(__name__)
 
 
@@ -23,20 +35,20 @@ def decorator_get_users_db(func: Callable) -> Callable:
         try:
             return func(settings, query, param)
         except OperationalError as oe:
-            log.error(f"Ошибка подключения к базе данных: {oe}")
+            print(f"Ошибка подключения к базе данных: {oe}")
             return False
         except psycopg2.errors.UniqueViolation as e:
-            log.info(f"Ошибка уникального ограничения:{e} Данные не будут добавлены")
+            print(f"Ошибка уникального ограничения:{e} Данные не будут добавлены")
             return False
         except ProgrammingError as pe:
             if str(pe) != 'ОШИБКА:  отношение "contact_details" уже существует\n':
-                log.error(f"Ошибка в SQL запросе: {pe}")
+                print(f"Ошибка в SQL запросе: {pe}")
                 return False
         except DatabaseError as de:
-            log.error(f"Ошибка базы данных: {de}")
+            print(f"Ошибка базы данных: {de}")
             return False
         except Exception as e:
-            log.error(f"Произошла ошибка: {e}")
+            print(f"Произошла ошибка: {e}")
             return False
         return False
 
@@ -70,8 +82,9 @@ def connect_db(
             else:
                 return cursor.rowcount
     except Exception as e:
-        log.error(f"Ошибка при выполнении запроса: {e}")
-        return False
+        print(f"Ошибка при выполнении запроса: {e}")
+        exit(1)
+        # return False
 
 
 def create_db(setting) -> bool:
@@ -82,9 +95,9 @@ def create_db(setting) -> bool:
      False - если не создавались таблицы или есть ошибки
     """
     query: str = (
-        "SELECT COUNT(*) FROM pg_catalog.pg_tables"
-        " WHERE schemaname NOT IN ('pg_catalog',"
-        "'information_schema')"
+        """SELECT COUNT(*) FROM pg_catalog.pg_tables
+         WHERE schemaname NOT IN ('pg_catalog',
+        'information_schema')"""
     )
 
     count_table: Union[List[Tuple[int]], bool] = connect_db(setting, query)
@@ -95,7 +108,7 @@ def create_db(setting) -> bool:
                 connect_db(setting, ddl_use_string())
                 return True
             except FileNotFoundError as fe:
-                log.error(f"Ошибка пути: {fe}")
+                print(f"Ошибка пути: {fe}")
                 return False
         return False
     else:
